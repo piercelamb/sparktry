@@ -4,7 +4,7 @@
 		module="sparktry$sbt_2.10"
 		revision="1.0"
 		status="integration"
-		publication="20141209200555"
+		publication="20141210085851"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>
