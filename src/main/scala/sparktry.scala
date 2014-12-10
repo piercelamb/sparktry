@@ -1,7 +1,10 @@
 import java.io.{IOException, InputStreamReader, BufferedReader}
 import java.net.{MalformedURLException, URLConnection, URL}
+import java.text.SimpleDateFormat
+import java.util.Date
 
 import org.apache.spark._
+import org.apache.spark.SparkContext._
 
 import scala.util.parsing.json.JSON
 
@@ -29,7 +32,7 @@ object sparktry {
       bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream))
       val parsedResult = JSON.parseFull(bufferedReader.readLine())
       parsedResult match {
-        case Some(map: Map[String, String]) => (map("country_name"), map("city"))
+       // case Some(map: Map[String, String]) => (map("country_name"), map("city"))
         case None => (null, null) // parsing failed
         case other => (null, null) // unknown data structure
       }
@@ -66,9 +69,12 @@ object sparktry {
       .flatMap(_.split("\n"))
       .map(parseLogEvent)
 
+    val timeStamps = logEvents.map(event => event.timestamp)
+    //val ipCounts = logEvents.map(event => (event.ip, 1)).reduceByKey(_ + _)
 
-    val numAs = logData.filter(line => line.contains("a")).count()
-    val numBs = logData.filter(line => line.contains("b")).count()
-    println("Lines with a: %s, Lines with b: %s".format(numAs, numBs))
+
+    //ipCounts.foreach(println)
+      timeStamps.foreach(println)
+
   }
 }

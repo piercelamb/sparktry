@@ -611,9 +611,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-agent;0.13.5!test-agent.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.5!apply-macro.jar
-[debug] :: resolution report :: resolve 5035ms :: artifacts dl 392ms
+[debug] :: resolution report :: resolve 7196ms :: artifacts dl 305ms
 [debug] 	report for sparktry#sparktry$sbt_2.10;1.0 default produced in /home/plamb/IdeaProjects/SparkTry/target/resolution-cache/reports/sparktry-sparktry$sbt_2.10-default.xml
-[debug] 	resolve done (5035ms resolve - 392ms download)
+[debug] 	resolve done (7196ms resolve - 305ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: sparktry#sparktry$sources_2.10;1.0
 [debug] 	confs: [default]
@@ -955,6 +955,6 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_8_2;0.13.5!precompiled-2_8_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_2;0.13.5!precompiled-2_9_2.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-sbt#precompiled-2_9_3;0.13.5!precompiled-2_9_3.jar(src)
-[debug] :: resolution report :: resolve 1379ms :: artifacts dl 142ms
+[debug] :: resolution report :: resolve 1203ms :: artifacts dl 370ms
 [debug] 	report for sparktry#sparktry$sources_2.10;1.0 default produced in /home/plamb/IdeaProjects/SparkTry/target/resolution-cache/reports/sparktry-sparktry$sources_2.10-default.xml
-[debug] 	resolve done (1379ms resolve - 142ms download)
+[debug] 	resolve done (1203ms resolve - 370ms download)
