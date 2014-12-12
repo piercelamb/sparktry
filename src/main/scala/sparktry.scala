@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
+import org.apache.spark.util.collection._
 
 import scala.util.parsing.json.JSON
 
@@ -71,27 +72,47 @@ object sparktry {
 
 
 // convert the parsed log into ip address, start time, start time, page requested
-    val ipTimeStamp = logEvents.map[(String, (Long, Long, String))](event => {
+    val ipTimeStamp = logEvents.map[(String, (String, Long, Long))](event => {
       val time = dateFormat.parse(event.timestamp).getTime()
 
-      (event.ip, (time, time, event.requestPage))
+      (event.ip, (event.requestPage, time, time))
     })
 
-    // reduce the ipTimeStamp using IP's as keys and taking the max of the 2nd time (to find end time)
-    val latestSessionInfo = ipTimeStamp.
-      map[(String, (Long, Long, Long))](a => {
-          (a._1, (a._2._1, a._2._2, 1))
-    }).
-      reduceByKey((a, b) => {
-      (Math.min(a._1, b._1), Math.max(a._2, b._2), a._3 + b._3)
-    })//.
+    //This code groups all the pages hit + their timestamps by each IP address resulting in (IP, CollectionBuffer) then
+    //applies a map function to the elements of the CollectionBuffer that groups them by the pages that were hit, then
+    //it filters out all the assets requested we don't care about (images css files etc) and then it maps a function to
+    // the values of the groupBy (i.e. the List of (page visited, timestamp timestamp) to reduce them to one session so as to
+    //see the time spent on each page by each IP.
+      val grouped = ipTimeStamp.groupByKey().mapValues(a => {
+        a.groupBy(_._1).filterKeys(a => {
+          a.endsWith(".html") || a.endsWith(".php") || a.equals("/")
+        }).mapValues[(Long, Long)](a => {
+          a.//check out reduceLeft so you can compare two numbers
+        })
+        })
+
+
+
+
+//    // reduce the ipTimeStamp using IP's as keys and taking the max of the 2nd time (to find end time)
+//   val latestSessionInfo = ipTimeStamp.
+//    map[(String, (String, Long, Long))](a => {
+//        (a._1, (a._2._1, a._2._2, a._2._3))
+//      }).
+//      reduceByKey((a, b) => {
+//     (a._1, Math.min(a._2, b._2), Math.max(a._3, b._3))
+//})//.
      // updateStateByKey(updateStatbyOfSessions)
 
   //  def updateStatebyOfSessions
-    //val ipCounts = logEvents.map(event => (event.ip, 1)).reduceByKey(_ + _)
 
-    //ipCounts.foreach(println)
-      latestSessionInfo.foreach(println)
 
+   grouped.foreach(println)
+
+
+
+    //latestSessionInfo.foreach(println)
+
+    //def plambReduceByKey(tuple: (String, Long, Long)):
   }
 }
