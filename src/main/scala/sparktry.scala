@@ -82,7 +82,7 @@ object sparktry {
     //applies a map function to the elements of the CollectionBuffer (mapValues) that groups them by the pages that were hit (groupBy), then
     //it filters out all the assets requested we don't care about (filterKeys) (images css files etc) and then it maps a function to
     // the values of the groupBy (i.e. the List of (page visited, timestamp timestamp) using foldLeft to reduce them to one session so as to
-    //see the time spent on each page by each IP.
+    //see the time spent on each page by each IP. TODO: break the mapValues/filterkeys calls into their own functions
       val grouped = ipTimeStamp
                     .groupByKey() //ipAdress, array of requested page/timestamps
                     .mapValues(a => {
