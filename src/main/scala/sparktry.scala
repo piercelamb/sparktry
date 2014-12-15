@@ -79,16 +79,25 @@ object sparktry {
     })
 
     //This code groups all the pages hit + their timestamps by each IP address resulting in (IP, CollectionBuffer) then
-    //applies a map function to the elements of the CollectionBuffer that groups them by the pages that were hit, then
-    //it filters out all the assets requested we don't care about (images css files etc) and then it maps a function to
-    // the values of the groupBy (i.e. the List of (page visited, timestamp timestamp) to reduce them to one session so as to
+    //applies a map function to the elements of the CollectionBuffer (mapValues) that groups them by the pages that were hit (groupBy), then
+    //it filters out all the assets requested we don't care about (filterKeys) (images css files etc) and then it maps a function to
+    // the values of the groupBy (i.e. the List of (page visited, timestamp timestamp) using foldLeft to reduce them to one session so as to
     //see the time spent on each page by each IP.
-      val grouped = ipTimeStamp.groupByKey().mapValues(a => {
-        a.groupBy(_._1).filterKeys(a => {
-          a.endsWith(".html") || a.endsWith(".php") || a.equals("/")
-        }).mapValues[(Long, Long)](a => {
-          a.//check out reduceLeft so you can compare two numbers
-        })
+      val grouped = ipTimeStamp
+                    .groupByKey() //ipAdress, array of requested page/timestamps
+                    .mapValues(a => {
+ // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
+                        a.groupBy(_._1)
+                          .filterKeys(a => {
+                            a.endsWith(".html") || a.endsWith(".php") || a.equals("/") //filter on requests we care about
+        }).mapValues { //apply a function to the List of page + timestamps for each page
+          case Nil => None;
+          case (_, a, b) :: tail => //ignore the page String so we can return a (Long, Long)
+          Some(tail.foldLeft((a, b)) {
+     // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
+            case ((startTime, nextStartTime), (_, endTime, nextEndTime)) => (startTime min nextStartTime, endTime max nextEndTime)
+      })}
+
         })
 
 
