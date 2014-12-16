@@ -4,9 +4,12 @@ import java.text.SimpleDateFormat
 
 import org.apache.spark._
 import org.apache.spark.SparkContext._
-import org.apache.spark.util.collection._
+import org.apache.spark.streaming._
+import org.apache.spark.streaming.StreamingContext._
+import org.apache.spark.streaming.kafka._
 
 import com.datastax.spark.connector._
+import com.datastax.spark.connector.streaming._
 import com.datastax.spark.connector.cql.CassandraConnector
 
 
@@ -36,7 +39,7 @@ object sparktry {
       bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream))
       val parsedResult = JSON.parseFull(bufferedReader.readLine())
       parsedResult match {
-        case Some(map: Map[String, String]) => (map("country_name"), map("city"))
+        //case Some(map: Map[String, String]) => (map("country_name"), map("city"))
         case None => (null, null) // parsing failed
         case other => (null, null) // unknown data structure
       }
@@ -63,6 +66,12 @@ object sparktry {
   val dateFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z")
 
   def main(args: Array[String]) {
+
+    val topics = "apache"
+    val numThreads = 2
+    val zkQuorum = "localhost:2181"   // Zookeeper quorum (hostname:port,hostname:port)
+    val clientGroup = "sparkFetcher"
+
     val logFile = "/home/plamb/Coding/Web_Analytics_POC/logtest/logtest.data" // Should be some file on your system
     val conf = new SparkConf(true)
         .setAppName("sparktry")
@@ -75,12 +84,30 @@ object sparktry {
       session.execute(s"CREATE KEYSPACE IF NOT EXISTS ipAddresses WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 }")
       session.execute(s"CREATE TABLE ipAddresses.timeOnPage (IP text PRIMARY KEY, page map<text, bigint>)")
     }
-    val sc = new SparkContext(conf)
-    val logData = sc.textFile(logFile, 2).cache()
+    val sc = new StreamingContext(conf, Seconds(2))
+    //SparkContext for batch
 
-    val logEvents = logData
-      .flatMap(_.split("\n"))
-      .map(parseLogEvent)
+    // assign equal threads to process each kafka topic
+    val topicMap = topics.split(",").map((_, numThreads.toInt)).toMap
+
+    // create an input stream that pulls messages from a kafka broker
+    val events = KafkaUtils.createStream(
+      sc,            // StreamingContext object
+      zkQuorum,
+      clientGroup,
+      topicMap  // Map of (topic_name -> numPartitions) to consume, each partition is consumed in its own thread
+      // StorageLevel.MEMORY_ONLY_SER_2 // Storage level to use for storing the received objects
+    ).map(_._2)
+
+//    val logData = sc.textFile(logFile, 2).cache()
+//
+//    val logEvents = logData
+//      .flatMap(_.split("\n"))
+//      .map(parseLogEvent)
+
+    val logEvents = events
+      .flatMap(_.split("\n")) // take each line of DStream
+      .map(parseLogEvent) // parse that to log event
 
     //val geolocation = logEvents.take(5).map(event => resolveIp(event.ip))
 
@@ -92,6 +119,8 @@ object sparktry {
 
       (event.ip, (event.requestPage, time, time))
     })
+
+
 
     //This code groups all the pages hit + their timestamps by each IP address resulting in (IP, CollectionBuffer) then
     //applies a map function to the elements of the CollectionBuffer (mapValues) that groups them by the pages that were hit (groupBy), then

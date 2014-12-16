@@ -4,7 +4,7 @@
 		module="sparktry$sources_javadoc_2.10"
 		revision="1.0"
 		status="integration"
-		publication="20141215132854"
+		publication="20141216132137"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
@@ -373,10 +373,6 @@
 			<artifact name="netty" type="src" ext="jar" conf="sources" e:classifier="sources"/>
 			<artifact name="netty" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
 		</dependency>
-		<dependency org="org.apache.spark" name="spark-streaming_2.10" rev="1.1.0" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
-			<artifact name="spark-streaming_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
-			<artifact name="spark-streaming_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
-		</dependency>
 		<dependency org="org.joda" name="joda-convert" rev="1.2" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
 			<artifact name="joda-convert" type="src" ext="jar" conf="sources" e:classifier="sources"/>
 			<artifact name="joda-convert" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
@@ -384,6 +380,30 @@
 		<dependency org="joda-time" name="joda-time" rev="2.3" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
 			<artifact name="joda-time" type="src" ext="jar" conf="sources" e:classifier="sources"/>
 			<artifact name="joda-time" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="org.apache.spark" name="spark-streaming_2.10" rev="1.1.1" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="spark-streaming_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="spark-streaming_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="org.apache.spark" name="spark-streaming-kafka_2.10" rev="1.1.1" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="spark-streaming-kafka_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="spark-streaming-kafka_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="org.apache.kafka" name="kafka_2.10" rev="0.8.0" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="kafka_2.10" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="kafka_2.10" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="com.101tec" name="zkclient" rev="0.3" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="zkclient" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="zkclient" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="com.yammer.metrics" name="metrics-core" rev="2.2.0" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="metrics-core" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="metrics-core" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+		</dependency>
+		<dependency org="com.yammer.metrics" name="metrics-annotation" rev="2.2.0" transitive="false" conf="compile->default(compile);runtime->default(compile);test->default(compile);compile-internal->default(compile);runtime-internal->default(compile);test-internal->default(compile)">
+			<artifact name="metrics-annotation" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+			<artifact name="metrics-annotation" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
 		</dependency>
 		<dependency org="org.scala-lang" name="jline" rev="2.10.4" transitive="false" conf="scala-tool->default(compile)">
 			<artifact name="jline" type="src" ext="jar" conf="sources" e:classifier="sources"/>

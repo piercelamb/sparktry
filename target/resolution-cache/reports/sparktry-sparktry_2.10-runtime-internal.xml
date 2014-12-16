@@ -7,8 +7,88 @@
 		revision="1.0"
 		conf="runtime-internal"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20141215132754"/>
+		date="20141216132104"/>
 	<dependencies>
+		<module organisation="org.apache.spark" name="spark-streaming-kafka_2.10">
+			<revision name="1.1.1" status="release" pubdate="20141119123446" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="100">
+				<metadata-artifact status="no" details="" size="24828" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming-kafka_2.10/ivy-1.1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming-kafka_2.10/1.1.1/spark-streaming-kafka_2.10-1.1.1.pom"/>
+				<caller organisation="sparktry" name="sparktry_2.10" conf="compile, runtime-internal, runtime, optional" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="spark-streaming-kafka_2.10" type="jar" ext="jar" status="no" details="" size="38745" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming-kafka_2.10/jars/spark-streaming-kafka_2.10-1.1.1.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming-kafka_2.10/1.1.1/spark-streaming-kafka_2.10-1.1.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.apache.kafka" name="kafka_2.10">
+			<revision name="0.8.0" status="release" pubdate="20131124195709" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="101">
+				<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="5195" time="0" location="/home/plamb/.ivy2/cache/org.apache.kafka/kafka_2.10/ivy-0.8.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/kafka/kafka_2.10/0.8.0/kafka_2.10-0.8.0.pom"/>
+				<caller organisation="org.apache.spark" name="spark-streaming-kafka_2.10" conf="default, compile, runtime, master" rev="0.8.0" rev-constraint-default="0.8.0" rev-constraint-dynamic="0.8.0" callerrev="1.1.1"/>
+				<artifacts>
+					<artifact name="kafka_2.10" type="jar" ext="jar" status="no" details="" size="2557388" time="0" location="/home/plamb/.ivy2/cache/org.apache.kafka/kafka_2.10/jars/kafka_2.10-0.8.0.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/kafka/kafka_2.10/0.8.0/kafka_2.10-0.8.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.yammer.metrics" name="metrics-annotation">
+			<revision name="2.2.0" status="release" pubdate="20121126121044" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="104">
+				<metadata-artifact status="no" details="" size="3993" time="0" location="/home/plamb/.ivy2/cache/com.yammer.metrics/metrics-annotation/ivy-2.2.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/yammer/metrics/metrics-annotation/2.2.0/metrics-annotation-2.2.0.pom"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.2.0" rev-constraint-default="2.2.0" rev-constraint-dynamic="2.2.0" callerrev="0.8.0"/>
+				<artifacts>
+					<artifact name="metrics-annotation" type="jar" ext="jar" status="no" details="" size="4229" time="0" location="/home/plamb/.ivy2/cache/com.yammer.metrics/metrics-annotation/jars/metrics-annotation-2.2.0.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/yammer/metrics/metrics-annotation/2.2.0/metrics-annotation-2.2.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.yammer.metrics" name="metrics-core">
+			<revision name="2.2.0" status="release" pubdate="20121126121109" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="103">
+				<metadata-artifact status="no" details="" size="4064" time="0" location="/home/plamb/.ivy2/cache/com.yammer.metrics/metrics-core/ivy-2.2.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.pom"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.2.0" rev-constraint-default="2.2.0" rev-constraint-dynamic="2.2.0" callerrev="0.8.0"/>
+				<artifacts>
+					<artifact name="metrics-core" type="jar" ext="jar" status="no" details="" size="82123" time="0" location="/home/plamb/.ivy2/cache/com.yammer.metrics/metrics-core/jars/metrics-core-2.2.0.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.101tec" name="zkclient">
+			<revision name="0.3" status="release" pubdate="20130529004028" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/sgroschupf/zkclient" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="102">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3638" time="0" location="/home/plamb/.ivy2/cache/com.101tec/zkclient/ivy-0.3.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/101tec/zkclient/0.3/zkclient-0.3.pom"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="0.3" rev-constraint-default="0.3" rev-constraint-dynamic="0.3" callerrev="0.8.0"/>
+				<artifacts>
+					<artifact name="zkclient" type="jar" ext="jar" status="no" details="" size="64009" time="0" location="/home/plamb/.ivy2/cache/com.101tec/zkclient/jars/zkclient-0.3.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/101tec/zkclient/0.3/zkclient-0.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.apache.spark" name="spark-streaming_2.10">
+			<revision name="1.1.1" status="release" pubdate="20141119121920" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="default, master(*), compile, runtime(*), runtime, default(compile), compile(*), master" position="97">
+				<metadata-artifact status="no" details="" size="29168" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming_2.10/ivy-1.1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming_2.10/1.1.1/spark-streaming_2.10-1.1.1.pom"/>
+				<caller organisation="sparktry" name="sparktry_2.10" conf="compile, runtime-internal, runtime, optional" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.0"/>
+				<caller organisation="com.datastax.spark" name="spark-cassandra-connector_2.10" conf="default, compile, runtime, master" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="1.1.0"/>
+				<caller organisation="org.apache.spark" name="spark-streaming-kafka_2.10" conf="default, compile, runtime, master" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.1.1"/>
+				<artifacts>
+					<artifact name="spark-streaming_2.10" type="jar" ext="jar" status="no" details="" size="1103858" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming_2.10/jars/spark-streaming_2.10-1.1.1.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming_2.10/1.1.1/spark-streaming_2.10-1.1.1.jar"/>
+					</artifact>
+					<artifact name="spark-streaming_2.10" type="jar" ext="jar" extra-merged="com.datastax.spark#spark-cassandra-connector_2.10;1.1.0 -> org.apache.spark#spark-streaming_2.10;1.1.0" extra-classifier="sources" status="no" details="" size="142113" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming_2.10/jars/spark-streaming_2.10-1.1.1-sources.jar">
+						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming_2.10/1.1.1/spark-streaming_2.10-1.1.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="1.1.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master, default(compile)" position="-1">
+				<evicted-by rev="1.1.1"/>
+				<caller organisation="sparktry" name="sparktry_2.10" conf="compile, runtime-internal, runtime, optional" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.0"/>
+				<caller organisation="com.datastax.spark" name="spark-cassandra-connector_2.10" conf="default, compile, runtime, master" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="1.1.0"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="com.datastax.spark" name="spark-cassandra-connector_2.10">
 			<revision name="1.1.0" status="release" pubdate="20141124111218" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/datastax/spark-cassandra-connector" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="88">
 				<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
@@ -41,17 +121,6 @@
 				<artifacts>
 					<artifact name="joda-convert" type="jar" ext="jar" status="no" details="" size="38460" time="0" location="/home/plamb/.ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.2.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/joda/joda-convert/1.2/joda-convert-1.2.jar"/>
-					</artifact>
-				</artifacts>
-			</revision>
-		</module>
-		<module organisation="org.apache.spark" name="spark-streaming_2.10">
-			<revision name="1.1.0" status="release" pubdate="20140902223720" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="97">
-				<metadata-artifact status="no" details="" size="33768" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming_2.10/ivy-1.1.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming_2.10/1.1.0/spark-streaming_2.10-1.1.0.pom"/>
-				<caller organisation="com.datastax.spark" name="spark-cassandra-connector_2.10" conf="default, compile, runtime, master" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="1.1.0"/>
-				<artifacts>
-					<artifact name="spark-streaming_2.10" type="jar" ext="jar" extra-classifier="sources" status="no" details="" size="141093" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-streaming_2.10/jars/spark-streaming_2.10-1.1.0-sources.jar">
-						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-streaming_2.10/1.1.0/spark-streaming_2.10-1.1.0-sources.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
@@ -196,10 +265,17 @@
 				<metadata-artifact status="no" details="" size="2809" time="0" location="/home/plamb/.ivy2/cache/org.scala-lang/scala-compiler/ivy-2.10.4.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.10.4/scala-compiler-2.10.4.pom"/>
 				<caller organisation="com.datastax.spark" name="spark-cassandra-connector_2.10" conf="default, compile, runtime, master" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.1.0"/>
 				<caller organisation="org.scala-lang" name="scalap" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="2.10.4"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.10.1" rev-constraint-default="2.10.1" rev-constraint-dynamic="2.10.1" callerrev="0.8.0"/>
 				<artifacts>
 					<artifact name="scala-compiler" type="jar" ext="jar" status="no" details="" size="14445780" time="0" location="/home/plamb/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.10.4.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.10.4/scala-compiler-2.10.4.jar"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="2.10.1" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
+				<evicted-by rev="2.10.4"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.10.1" rev-constraint-default="2.10.1" rev-constraint-dynamic="2.10.1" callerrev="0.8.0"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 		</module>
@@ -261,20 +337,14 @@
 			</revision>
 		</module>
 		<module organisation="org.apache.spark" name="spark-core_2.10">
-			<revision name="1.1.1" status="release" pubdate="20141119121524" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master, master(*), runtime(*), compile(*)" position="1">
+			<revision name="1.1.1" status="release" pubdate="20141119121524" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://spark.apache.org/" downloaded="false" searched="false" default="false" conf="default, master(*), compile, runtime(*), runtime, default(compile), compile(*), master" position="1">
 				<metadata-artifact status="no" details="" size="36735" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-core_2.10/ivy-1.1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/apache/spark/spark-core_2.10/1.1.1/spark-core_2.10-1.1.1.pom"/>
 				<caller organisation="sparktry" name="sparktry_2.10" conf="compile, runtime-internal, runtime, optional" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.0"/>
-				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="1.1.0"/>
+				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="1.1.1"/>
 				<artifacts>
 					<artifact name="spark-core_2.10" type="jar" ext="jar" status="no" details="" size="6526979" time="0" location="/home/plamb/.ivy2/cache/org.apache.spark/spark-core_2.10/jars/spark-core_2.10-1.1.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/apache/spark/spark-core_2.10/1.1.1/spark-core_2.10-1.1.1.jar"/>
 					</artifact>
-				</artifacts>
-			</revision>
-			<revision name="1.1.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
-				<evicted-by rev="1.1.1"/>
-				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="1.1.0"/>
-				<artifacts>
 				</artifacts>
 			</revision>
 		</module>
@@ -683,10 +753,17 @@
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
 				<metadata-artifact status="no" details="" size="3846" time="0" location="/home/plamb/.ivy2/cache/org.xerial.snappy/snappy-java/ivy-1.0.5.3.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.0.5.3/snappy-java-1.0.5.3.pom"/>
 				<caller organisation="org.apache.spark" name="spark-core_2.10" conf="default, compile, runtime, master" rev="1.0.5.3" rev-constraint-default="1.0.5.3" rev-constraint-dynamic="1.0.5.3" callerrev="1.1.1"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="1.0.4.1" rev-constraint-default="1.0.4.1" rev-constraint-dynamic="1.0.4.1" callerrev="0.8.0"/>
 				<artifacts>
 					<artifact name="snappy-java" type="bundle" ext="jar" status="no" details="" size="1308212" time="0" location="/home/plamb/.ivy2/cache/org.xerial.snappy/snappy-java/bundles/snappy-java-1.0.5.3.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.0.5.3/snappy-java-1.0.5.3.jar"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="1.0.4.1" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
+				<evicted-by rev="1.0.5.3"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="1.0.4.1" rev-constraint-default="1.0.4.1" rev-constraint-dynamic="1.0.4.1" callerrev="0.8.0"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 		</module>
@@ -742,7 +819,9 @@
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
 				<metadata-artifact status="no" details="" size="3514" time="0" location="/home/plamb/.ivy2/cache/log4j/log4j/ivy-1.2.17.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.pom"/>
 				<caller organisation="org.apache.spark" name="spark-core_2.10" conf="default, compile, runtime, master" rev="1.2.17" rev-constraint-default="1.2.17" rev-constraint-dynamic="1.2.17" callerrev="1.1.1"/>
+				<caller organisation="com.101tec" name="zkclient" conf="compile, runtime" rev="1.2.14" rev-constraint-default="1.2.14" rev-constraint-dynamic="1.2.14" callerrev="0.3"/>
 				<caller organisation="org.tachyonproject" name="tachyon" conf="compile, runtime" rev="1.2.17" rev-constraint-default="1.2.17" rev-constraint-dynamic="1.2.17" callerrev="0.5.0"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="1.2.15" rev-constraint-default="1.2.15" rev-constraint-dynamic="1.2.15" callerrev="0.8.0"/>
 				<caller organisation="org.apache.zookeeper" name="zookeeper" conf="compile, runtime" rev="1.2.17" rev-constraint-default="1.2.17" rev-constraint-dynamic="1.2.15" callerrev="3.4.5"/>
 				<caller organisation="org.slf4j" name="slf4j-log4j12" conf="compile, runtime" rev="1.2.17" rev-constraint-default="1.2.17" rev-constraint-dynamic="1.2.17" callerrev="1.7.5"/>
 				<artifacts>
@@ -751,12 +830,26 @@
 					</artifact>
 				</artifacts>
 			</revision>
+			<revision name="1.2.14" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*)" position="-1">
+				<evicted-by rev="1.2.17"/>
+				<caller organisation="com.101tec" name="zkclient" conf="compile, runtime" rev="1.2.14" rev-constraint-default="1.2.14" rev-constraint-dynamic="1.2.14" callerrev="0.3"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+			<revision name="1.2.15" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
+				<evicted-by rev="1.2.17"/>
+				<caller organisation="com.101tec" name="zkclient" conf="compile, runtime" rev="1.2.14" rev-constraint-default="1.2.14" rev-constraint-dynamic="1.2.14" callerrev="0.3"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="1.2.15" rev-constraint-default="1.2.15" rev-constraint-dynamic="1.2.15" callerrev="0.8.0"/>
+				<artifacts>
+				</artifacts>
+			</revision>
 		</module>
 		<module organisation="org.slf4j" name="slf4j-api">
 			<revision name="1.7.5" status="release" pubdate="20130325135215" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.slf4j.org" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="25">
 				<metadata-artifact status="no" details="" size="4469" time="0" location="/home/plamb/.ivy2/cache/org.slf4j/slf4j-api/ivy-1.7.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.5/slf4j-api-1.7.5.pom"/>
 				<caller organisation="com.codahale.metrics" name="metrics-graphite" conf="compile, runtime" rev="1.7.5" rev-constraint-default="1.7.5" rev-constraint-dynamic="1.7.5" callerrev="3.0.0"/>
 				<caller organisation="org.apache.cassandra" name="cassandra-thrift" conf="compile, runtime" rev="1.7.2" rev-constraint-default="1.7.2" rev-constraint-dynamic="1.7.2" callerrev="2.1.2"/>
+				<caller organisation="com.yammer.metrics" name="metrics-core" conf="compile, runtime" rev="1.7.2" rev-constraint-default="1.7.2" rev-constraint-dynamic="1.7.2" callerrev="2.2.0"/>
 				<caller organisation="com.codahale.metrics" name="metrics-core" conf="compile, runtime" rev="1.7.5" rev-constraint-default="1.7.5" rev-constraint-dynamic="1.7.5" callerrev="3.0.2"/>
 				<caller organisation="org.apache.curator" name="curator-client" conf="compile, runtime" rev="1.7.5" rev-constraint-default="1.7.5" rev-constraint-dynamic="1.6.4" callerrev="2.4.0"/>
 				<caller organisation="org.tachyonproject" name="tachyon" conf="compile, runtime" rev="1.7.5" rev-constraint-default="1.7.5" rev-constraint-dynamic="1.7.2" callerrev="0.5.0"/>
@@ -779,6 +872,7 @@
 			<revision name="1.7.2" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
 				<evicted-by rev="1.7.5"/>
 				<caller organisation="org.apache.cassandra" name="cassandra-thrift" conf="compile, runtime" rev="1.7.2" rev-constraint-default="1.7.2" rev-constraint-dynamic="1.7.2" callerrev="2.1.2"/>
+				<caller organisation="com.yammer.metrics" name="metrics-core" conf="compile, runtime" rev="1.7.2" rev-constraint-default="1.7.2" rev-constraint-dynamic="1.7.2" callerrev="2.2.0"/>
 				<caller organisation="org.apache.thrift" name="libthrift" conf="compile, runtime" rev="1.7.2" rev-constraint-default="1.7.2" rev-constraint-dynamic="1.5.8" callerrev="0.9.1"/>
 				<artifacts>
 				</artifacts>
@@ -899,9 +993,9 @@
 		<module organisation="org.eclipse.jetty" name="jetty-server">
 			<revision name="8.1.14.v20131031" status="release" pubdate="20131031084113" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.eclipse.org/jetty" downloaded="false" searched="false" default="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="38">
 				<metadata-artifact status="no" details="" size="9211" time="0" location="/home/plamb/.ivy2/cache/org.eclipse.jetty/jetty-server/ivy-8.1.14.v20131031.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/8.1.14.v20131031/jetty-server-8.1.14.v20131031.pom"/>
-				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="8.1.14.v20131031" rev-constraint-default="8.1.14.v20131031" rev-constraint-dynamic="8.1.14.v20131031" callerrev="1.1.0"/>
 				<caller organisation="org.apache.spark" name="spark-core_2.10" conf="default, compile, runtime, master" rev="8.1.14.v20131031" rev-constraint-default="8.1.14.v20131031" rev-constraint-dynamic="8.1.14.v20131031" callerrev="1.1.1"/>
 				<caller organisation="org.eclipse.jetty" name="jetty-jndi" conf="compile, runtime" rev="8.1.14.v20131031" rev-constraint-default="8.1.14.v20131031" rev-constraint-dynamic="8.1.14.v20131031" callerrev="8.1.14.v20131031"/>
+				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="8.1.14.v20131031" rev-constraint-default="8.1.14.v20131031" rev-constraint-dynamic="8.1.14.v20131031" callerrev="1.1.1"/>
 				<caller organisation="org.eclipse.jetty" name="jetty-security" conf="compile, runtime" rev="8.1.14.v20131031" rev-constraint-default="8.1.14.v20131031" rev-constraint-dynamic="8.1.14.v20131031" callerrev="8.1.14.v20131031"/>
 				<artifacts>
 					<artifact name="jetty-server" type="jar" ext="jar" status="no" details="" size="357704" time="0" location="/home/plamb/.ivy2/cache/org.eclipse.jetty/jetty-server/jars/jetty-server-8.1.14.v20131031.jar">
@@ -1283,20 +1377,27 @@
 				<caller organisation="sparktry" name="sparktry_2.10" conf="compile, runtime-internal, runtime, optional" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.0"/>
 				<caller organisation="com.datastax.spark" name="spark-cassandra-connector_2.10" conf="default, compile, runtime, master" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.1.0"/>
 				<caller organisation="org.scala-lang" name="scala-compiler" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="2.10.4"/>
+				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.1.1"/>
 				<caller organisation="org.scala-lang" name="scala-reflect" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="2.10.4"/>
 				<caller organisation="com.twitter" name="chill_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.3" callerrev="0.3.6"/>
 				<caller organisation="org.spark-project.akka" name="akka-remote_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.2" callerrev="2.2.3-shaded-protobuf"/>
 				<caller organisation="org.spark-project.akka" name="akka-actor_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.2" callerrev="2.2.3-shaded-protobuf"/>
-				<caller organisation="org.apache.spark" name="spark-streaming_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.1.0"/>
 				<caller organisation="org.apache.spark" name="spark-core_2.10" conf="default, compile, runtime, master" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.1.1"/>
 				<caller organisation="org.json4s" name="json4s-ast_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.0" callerrev="3.2.10"/>
 				<caller organisation="org.spark-project.akka" name="akka-slf4j_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.2" callerrev="2.2.3-shaded-protobuf"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.10.1" rev-constraint-default="2.10.1" rev-constraint-dynamic="2.10.1" callerrev="0.8.0"/>
 				<caller organisation="org.json4s" name="json4s-jackson_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.0" callerrev="3.2.10"/>
 				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.0" callerrev="3.2.10"/>
 				<artifacts>
 					<artifact name="scala-library" type="jar" ext="jar" status="no" details="" size="7126372" time="0" location="/home/plamb/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.10.4.jar">
 						<origin-location is-local="false" location="UNKNOWN"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="2.10.1" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="master(*), compile, runtime(*), runtime, compile(*), master" position="-1">
+				<evicted-by rev="2.10.4"/>
+				<caller organisation="org.apache.kafka" name="kafka_2.10" conf="compile, runtime" rev="2.10.1" rev-constraint-default="2.10.1" rev-constraint-dynamic="2.10.1" callerrev="0.8.0"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 		</module>
