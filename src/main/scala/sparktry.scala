@@ -6,6 +6,10 @@ import org.apache.spark._
 import org.apache.spark.SparkContext._
 import org.apache.spark.util.collection._
 
+import com.datastax.spark.connector._
+import com.datastax.spark.connector.cql.CassandraConnector
+
+
 import scala.util.parsing.json.JSON
 
 case class LogEvent(ip:String, timestamp:String, requestPage:String, responseCode:Int, responseSize:Int, userAgent:String)
@@ -32,7 +36,7 @@ object sparktry {
       bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream))
       val parsedResult = JSON.parseFull(bufferedReader.readLine())
       parsedResult match {
-       // case Some(map: Map[String, String]) => (map("country_name"), map("city"))
+        // case Some(map: Map[String, String]) => (map("country_name"), map("city"))
         case None => (null, null) // parsing failed
         case other => (null, null) // unknown data structure
       }
@@ -60,9 +64,17 @@ object sparktry {
 
   def main(args: Array[String]) {
     val logFile = "/home/plamb/Coding/Web_Analytics_POC/logtest/logtest.data" // Should be some file on your system
-    val conf = new SparkConf()
+    val conf = new SparkConf(true)
         .setAppName("sparktry")
         .setMaster("local[*]")
+        .set("spark.cassandra.connection.host", "127.0.0.1")
+        .set("spark.executor.extraClassPath", "/home/plamb/Coding/Web_Analytics_POC/spark-cassandra-connector/spark-cassandra-connector/target/scala-2.10/spark-cassandra-connector-assembly-1.1.1-SNAPSHOT.jar")
+
+    CassandraConnector(conf).withSessionDo { session =>
+      session.execute(s"DROP KEYSPACE IF EXISTS ipAddresses")
+      session.execute(s"CREATE KEYSPACE IF NOT EXISTS ipAddresses WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 }")
+      session.execute(s"CREATE TABLE ipAddresses.timeOnPage (IP text PRIMARY KEY, json text)")
+    }
     val sc = new SparkContext(conf)
     val logData = sc.textFile(logFile, 2).cache()
 
@@ -85,43 +97,33 @@ object sparktry {
     //see the time spent on each page by each IP. TODO: break the mapValues/filterkeys calls into their own functions
       val grouped = ipTimeStamp
                     .groupByKey() //ipAdress, array of requested page/timestamps
-                    .mapValues(a => {
- // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
-                        a.groupBy(_._1)
-                          .filterKeys(a => {
-                            a.endsWith(".html") || a.endsWith(".php") || a.equals("/") //filter on requests we care about
-        }).mapValues { //apply a function to the List of page + timestamps for each page
-          case Nil => None;
-          case (_, a, b) :: tail => //ignore the page String so we can return a (Long, Long)
-          Some(tail.foldLeft((a, b)) {
-     // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
+                    .mapValues { a => {
+      // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
+      a.groupBy(_._1)
+        .filterKeys {
+        a => {
+          a.endsWith(".html") || a.endsWith(".php") || a.equals("/") //filter on requests we care about
+        }
+      }
+        .mapValues {
+        //apply a function to the List of page + timestamps for each page
+        case Nil => None;
+        case (_, a, b) :: tail => //ignore the page String so we can return a (Long, Long)
+          Some(x = tail.foldLeft((a, b)) {
+            // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
             case ((startTime, nextStartTime), (_, endTime, nextEndTime)) => (startTime min nextStartTime, endTime max nextEndTime)
-      })}
+          })
+        }
+      }
+    }
 
-        })
+//try computing the endTime - startTime and store that instead of the nested Tuple for easier cassandra stuff
+    //http://www.datastax.com/dev/blog/cql3_collections
 
-
-
-
-//    // reduce the ipTimeStamp using IP's as keys and taking the max of the 2nd time (to find end time)
-//   val latestSessionInfo = ipTimeStamp.
-//    map[(String, (String, Long, Long))](a => {
-//        (a._1, (a._2._1, a._2._2, a._2._3))
-//      }).
-//      reduceByKey((a, b) => {
-//     (a._1, Math.min(a._2, b._2), Math.max(a._3, b._3))
-//})//.
-     // updateStateByKey(updateStatbyOfSessions)
-
-  //  def updateStatebyOfSessions
-
-
-   grouped.foreach(println)
+   grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip"))
 
 
 
-    //latestSessionInfo.foreach(println)
+        }
+      }
 
-    //def plambReduceByKey(tuple: (String, Long, Long)):
-  }
-}
