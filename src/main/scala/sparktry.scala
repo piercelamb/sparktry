@@ -26,7 +26,7 @@ object sparktry {
       null
   }
 
-  //method for finding out IP's location
+  //method for finding out IP's location. TODO gut JSON.parseFull for a better parsing lib that produces types (argonaut)
   def resolveIp(ip: String): (String, String) = {
     val url = "http://api.hostip.info/get_json.php"
     var bufferedReader: BufferedReader = null
@@ -36,7 +36,7 @@ object sparktry {
       bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream))
       val parsedResult = JSON.parseFull(bufferedReader.readLine())
       parsedResult match {
-        // case Some(map: Map[String, String]) => (map("country_name"), map("city"))
+        case Some(map: Map[String, String]) => (map("country_name"), map("city"))
         case None => (null, null) // parsing failed
         case other => (null, null) // unknown data structure
       }
@@ -73,7 +73,7 @@ object sparktry {
     CassandraConnector(conf).withSessionDo { session =>
       session.execute(s"DROP KEYSPACE IF EXISTS ipAddresses")
       session.execute(s"CREATE KEYSPACE IF NOT EXISTS ipAddresses WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 }")
-      session.execute(s"CREATE TABLE ipAddresses.timeOnPage (IP text PRIMARY KEY, json text)")
+      session.execute(s"CREATE TABLE ipAddresses.timeOnPage (IP text PRIMARY KEY, page map<text, bigint>)")
     }
     val sc = new SparkContext(conf)
     val logData = sc.textFile(logFile, 2).cache()
@@ -82,6 +82,9 @@ object sparktry {
       .flatMap(_.split("\n"))
       .map(parseLogEvent)
 
+    //val geolocation = logEvents.take(5).map(event => resolveIp(event.ip))
+
+    //geolocation.foreach(println)
 
 // convert the parsed log into ip address, start time, start time, page requested
     val ipTimeStamp = logEvents.map[(String, (String, Long, Long))](event => {
@@ -113,14 +116,15 @@ object sparktry {
             // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
             case ((startTime, nextStartTime), (_, endTime, nextEndTime)) => (startTime min nextStartTime, endTime max nextEndTime)
           })
+            .map{
+            case (firstTime, lastTime) => lastTime - firstTime}
+          //this finds the total length of the session
         }
       }
     }
 
-//try computing the endTime - startTime and store that instead of the nested Tuple for easier cassandra stuff
-    //http://www.datastax.com/dev/blog/cql3_collections
 
-   grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip"))
+    grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip", "page"))
 
 
 
