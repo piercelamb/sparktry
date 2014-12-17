@@ -72,7 +72,10 @@ object sparktry {
     val zkQuorum = "localhost:2181"   // Zookeeper quorum (hostname:port,hostname:port)
     val clientGroup = "sparkFetcher"
 
-    val logFile = "/home/plamb/Coding/Web_Analytics_POC/logtest/logtest.data" // Should be some file on your system
+
+    //val logFile = "/home/plamb/Coding/Web_Analytics_POC/logtest/logtest.data" // Should be some file on your system
+
+
     val conf = new SparkConf(true)
         .setAppName("sparktry")
         .setMaster("local[*]")
@@ -99,6 +102,7 @@ object sparktry {
       // StorageLevel.MEMORY_ONLY_SER_2 // Storage level to use for storing the received objects
     ).map(_._2)
 
+    events.print()
 //    val logData = sc.textFile(logFile, 2).cache()
 //
 //    val logEvents = logData
@@ -109,6 +113,7 @@ object sparktry {
       .flatMap(_.split("\n")) // take each line of DStream
       .map(parseLogEvent) // parse that to log event
 
+    logEvents.print()
     //val geolocation = logEvents.take(5).map(event => resolveIp(event.ip))
 
     //geolocation.foreach(println)
@@ -120,7 +125,7 @@ object sparktry {
       (event.ip, (event.requestPage, time, time))
     })
 
-
+ipTimeStamp.print()
 
     //This code groups all the pages hit + their timestamps by each IP address resulting in (IP, CollectionBuffer) then
     //applies a map function to the elements of the CollectionBuffer (mapValues) that groups them by the pages that were hit (groupBy), then
@@ -152,9 +157,12 @@ object sparktry {
       }
     }
 
+    grouped.print()
 
     grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip", "page"))
 
+    sc.start()
+    sc.awaitTermination()
 
 
         }
