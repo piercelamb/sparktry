@@ -6,6 +6,7 @@ import org.apache.spark._
 import org.apache.spark.SparkContext._
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.StreamingContext._
+import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.kafka._
 
 import com.datastax.spark.connector._
@@ -143,51 +144,39 @@ object sparktry {
     //see the time spent on each page by each IP. TODO: break the mapValues/filterkeys calls into their own functions
 
     def updateValues( newValues: Seq[(String, Long, Long)],
-                          currentValue: Option[Seq[ (String, Long, Long)]]
+                          currentValue: Option[Seq[(String, Long, Long)]]
                           ): Option[Seq[(String, Long, Long)]] = {
 
       Some(currentValue.getOrElse(Seq.empty) ++ newValues)
 
       }
 
+// In batch mode, use groupByKey, in streaming, updateStateByKey
+    //this code still isnt getting sessions exactly right; it should compute the session when a log appears of the user getting
+    //a new page, it should also account for 404's, however, i need real logs to work on that
+    val grouped = ipTimeStamp.updateStateByKey(updateValues)
+                              .mapValues( a => a.groupBy(_._1)
+                                .filterKeys(a => {
+                                  a.endsWith(".html") || a.endsWith(".php") || a.equals("/") //filter on requests we care about
+                              }).map(identity) //added for serialization issues
 
-    val grouped = ipTimeStamp.updateStateByKey(updateValues) //ipAdress, array of requested page/timestamps
+                              .mapValues {
+                                case Nil => None;
+                                case (_, a, b) :: tail => //ignore the page String so we can return a (Long, Long)
+                                  Some(x = tail.foldLeft((a, b)) {
+                            // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
+                                    case ((startTime, nextStartTime), (_, endTime, nextEndTime)) =>
+                                      (startTime min nextStartTime, endTime max nextEndTime)
+                                    })
+                                    .map{case (firstTime, lastTime) => lastTime - firstTime};
+                                  //this finds the total length of the session
+                              }.map(identity) //added for serialization issues
+                          ).map(identity) //added for serialization issues
+
 
     grouped.print()
 
-//    grouped.foreachRDD(x => println(x.first))
-//    grouped.foreachRDD(x => println(x.count))
-
-//
-//        .mapValues { a => {
-//      // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
-//      a.groupBy(_._1)}}.map(identity)
-//        .filterKeys {
-//        a => {
-//          a.endsWith(".html") || a.endsWith(".php") || a.equals("/") //filter on requests we care about
-//        }
-//      }.map(identity)
-//
-//        .mapValues {
-//        //apply a function to the List of page + timestamps for each page
-//        case Nil => None;
-//        case (_, a, b) :: tail => //ignore the page String so we can return a (Long, Long)
-//          Some(x = tail.foldLeft((a, b)) {
-//            // Apply the foldLeft to each of the times, finding the min time and the max time for start/end
-//            case ((startTime, nextStartTime), (_, endTime, nextEndTime)) => (startTime min nextStartTime, endTime max nextEndTime)
-//          })
-//            .map{case (firstTime, lastTime) => lastTime - firstTime};
-//          //this finds the total length of the session
-//        case ArrayBuffer((_, a, b)) :: tail =>
-//          Some(x = tail.foldLeft((a, b)) {
-//
-//          })
-//        }.map(identity) //added for mapValues serialization issues
-//      }
-//    }.map(identity) //added for mapValues serialization issues
-
-
-    //grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip", "page"))
+    grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip", "page"))
 
     ssc.start()
     ssc.awaitTermination()
