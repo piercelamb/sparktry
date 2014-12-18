@@ -1,4 +1,4 @@
-[info] Updating {file:/home/plamb/IdeaProjects/sparktry/project/project/}sparktry-build-build...
+[info] Updating {file:/home/plamb/IdeaProjects/SparkTry/project/project/}sparktry-build-build...
 [debug] :: resolving dependencies :: default#sparktry-build-build;0.1-SNAPSHOT
 [debug] 	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool]
 [debug] 	validate = true
@@ -16,7 +16,7 @@
 [debug] == resolving dependencies for default#sparktry-build-build;0.1-SNAPSHOT [provided]
 [debug] == resolving dependencies default#sparktry-build-build;0.1-SNAPSHOT->org.scala-lang#scala-library;2.10.4 [provided->default(compile)]
 [info] Resolving org.scala-lang#scala-library;2.10.4 ...
-[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@41ce4f32
+[debug] sbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@1072dda7
 [debug] sbt-chain: module revision found in cache: org.scala-lang#scala-library;2.10.4
 [debug] 	typesafe-ivy-releases: revision in cache: org.scala-lang#scala-library;2.10.4
 [debug] 	found org.scala-lang#scala-library;2.10.4 in sbt-chain
@@ -1337,19 +1337,19 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.5!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.scala-lang#jline;2.10.4!jline.jar
 [debug] 	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar
-[debug] :: resolution report :: resolve 3693ms :: artifacts dl 75ms
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT compile produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-compile.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT runtime produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-runtime.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT test produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-test.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT provided produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-provided.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT optional produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-optional.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT compile-internal produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-compile-internal.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT runtime-internal produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-runtime-internal.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT test-internal produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-test-internal.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT plugin produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-plugin.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT sources produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-sources.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT docs produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-docs.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT pom produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-pom.xml
-[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT scala-tool produced in /home/plamb/IdeaProjects/sparktry/project/project/target/resolution-cache/reports/default-sparktry-build-build-scala-tool.xml
-[debug] 	resolve done (3693ms resolve - 75ms download)
+[debug] :: resolution report :: resolve 3734ms :: artifacts dl 226ms
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT compile produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-compile.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT runtime produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-runtime.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT test produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-test.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT provided produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-provided.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT optional produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-optional.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT compile-internal produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-compile-internal.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT runtime-internal produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-runtime-internal.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT test-internal produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-test-internal.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT plugin produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-plugin.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT sources produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-sources.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT docs produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-docs.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT pom produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-pom.xml
+[debug] 	report for default#sparktry-build-build;0.1-SNAPSHOT scala-tool produced in /home/plamb/IdeaProjects/SparkTry/project/project/target/resolution-cache/reports/default-sparktry-build-build-scala-tool.xml
+[debug] 	resolve done (3734ms resolve - 226ms download)
 [info] Done updating.

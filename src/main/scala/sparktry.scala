@@ -67,6 +67,14 @@ object sparktry {
     }
   }
 
+  def updateGroupByKey( newValues: Seq[Iterable[(String, Long, Long)]],
+                        currentValue: Option[(String, ArrayBuffer[(String, Long, Long)])]
+                        ): Option[(String, ArrayBuffer[(String, Long, Long)])] = {
+
+    currentValue.map{ case (k,v) => (k, v ++ (newValues.flatten))
+    }
+  }
+
   val dateFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z")
 
   def main(args: Array[String]) {
@@ -142,35 +150,8 @@ object sparktry {
     //see the time spent on each page by each IP. TODO: break the mapValues/filterkeys calls into their own functions
     val grouped = ipTimeStamp.groupByKey().updateStateByKey(updateGroupByKey) //ipAdress, array of requested page/timestamps
 
-
-
-    def updateGroupByKey(
-                          newValues: Seq[(Iterable[(String, Long, Long)])],
-                          currentValue: Option[(String, ArrayBuffer[(String, Long, Long)])]
-                          ): Option[(String, ArrayBuffer[(String, Long, Long)])] = {
-      //Collect the values
-      val buffs: Seq[ArrayBuffer[(String, Long, Long)]] =
-        (for (v <- newValues) yield v.to[collection.mutable.ArrayBuffer[(String, Long, Long)]])
-      val buffs2 = if (currentValue.isEmpty) buffs else currentValue.get._2 :+ buffs
-      //Convert state to buffer
-      if (buffs2.isEmpty) None else {
-        val key = currentValue.get._1
-        Some((key, buffs2.foldLeft(new ArrayBuffer[(String, Long, Long)])((v, a) => v ++ a)))
-      }
-    }
-
-//    def updateGroupByKey(
-//                          newValues: Seq[(Iterable[(String, Long, Long)])],
-//                          currentValue: Option[(String, ArrayBuffer[(String, Long, Long)])]
-//                          ): Option[(String, ArrayBuffer[(String, Long, Long)])] = {
-//      //Collect the values
-//      val buffs: Seq[ArrayBuffer[(String, Long, Long)]] = (for (v <- newValues) yield v) +:
-//        /* add if there were existing */ (currentValue.get._2)
-//      //Convert state to buffer
-//      if (buffs.isEmpty) None else {
-//        Some((currentValue.get._1, buffs.foldLeft(new ArrayBuffer[(String, Long, Long)])((v, a) => v++a)))
-//      }
-//    }
+    
+//
 //        .mapValues { a => {
 //      // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
 //      a.groupBy(_._1)}}.map(identity)

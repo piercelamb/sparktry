@@ -4,7 +4,7 @@
 		module="sparktry-build-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20141209093109"
+		publication="20141217190311"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
