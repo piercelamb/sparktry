@@ -67,13 +67,7 @@ object sparktry {
     }
   }
 
-  def updateGroupByKey( newValues: Seq[Iterable[(String, Long, Long)]],
-                        currentValue: Option[(String, ArrayBuffer[(String, Long, Long)])]
-                        ): Option[(String, ArrayBuffer[(String, Long, Long)])] = {
 
-    currentValue.map{ case (k,v) => (k, v ++ (newValues.flatten))
-    }
-  }
 
   val dateFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss Z")
 
@@ -142,15 +136,28 @@ object sparktry {
     })
 
 
-
     //This code groups all the pages hit + their timestamps by each IP address resulting in (IP, CollectionBuffer) then
     //applies a map function to the elements of the CollectionBuffer (mapValues) that groups them by the pages that were hit (groupBy), then
     //it filters out all the assets requested we don't care about (filterKeys) (images css files etc) and then it maps a function to
     // the values of the groupBy (i.e. the List of (page visited, timestamp timestamp) using foldLeft to reduce them to one session so as to
     //see the time spent on each page by each IP. TODO: break the mapValues/filterkeys calls into their own functions
-    val grouped = ipTimeStamp.groupByKey().updateStateByKey(updateGroupByKey) //ipAdress, array of requested page/timestamps
 
-    
+    def updateValues( newValues: Seq[(String, Long, Long)],
+                          currentValue: Option[Seq[ (String, Long, Long)]]
+                          ): Option[Seq[(String, Long, Long)]] = {
+
+      Some(currentValue.getOrElse(Seq.empty) ++ newValues)
+
+      }
+
+
+    val grouped = ipTimeStamp.updateStateByKey(updateValues) //ipAdress, array of requested page/timestamps
+
+    grouped.print()
+
+//    grouped.foreachRDD(x => println(x.first))
+//    grouped.foreachRDD(x => println(x.count))
+
 //
 //        .mapValues { a => {
 //      // for everything in the above array, group it by the requested Page, results in (ipAddress, Map(page -> List((page, time, time)...)...) TODO: needs error handling
@@ -178,7 +185,7 @@ object sparktry {
 //        }.map(identity) //added for mapValues serialization issues
 //      }
 //    }.map(identity) //added for mapValues serialization issues
-    grouped.print()
+
 
     //grouped.saveToCassandra("ipaddresses", "timeonpage", SomeColumns("ip", "page"))
 
